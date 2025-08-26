@@ -48,3 +48,18 @@ function showDetails(rank) {
 
 // Example function to simulate player count
 document.getElementById('playerCount').innerText = Math.floor(Math.random() * 100);
+function openDiscord() {
+    const discordLink = "https://discord.gg/N7GSGYdhvg";
+    const discordAppLink = "discord://invite/N7GSGYdhvg";
+
+    // Try to open the Discord app first
+    window.location.href = discordAppLink;
+
+    // Fallback to web link after a short delay
+    setTimeout(() => {
+        window.open(discordLink, '_blank');
+    }, 2000);
+}
+
+// Example function to simulate player count
+document.getElementById('playerCount').innerText = Math.floor(Math.random() * 100);
