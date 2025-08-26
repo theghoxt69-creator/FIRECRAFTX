@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft Server Store</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
@@ -21,9 +21,9 @@
     <section class="hero">
         <img src="/assets/images/hero.png" alt="Server Logo" class="hero-logo">
         <div class="hero-buttons">
-            <button class="hero-button">Play Now</button>
-            <button class="hero-button">Discord</button>
-            <button class="hero-button">Store</button>
+            <button class="hero-button" onclick="window.location.href='index.html'">Play Now</button>
+            <button class="hero-button" onclick="openDiscord()">Discord</button>
+            <button class="hero-button" onclick="window.open('https://www.instagram.com/dkd_jagmohan_?igsh=aWJlejgyOWNvd3Fo', '_blank')">Instagram</button>
         </div>
         <div class="players-online">Players Online: <span id="playerCount">0</span></div>
     </section>
