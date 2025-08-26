@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Minecraft Server Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Minecraft Server</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Store</a></li>
+            <li><a href="ranks.html">Ranks</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
+
+    <section class="shop">
+        <h2>Featured Packages</h2>
+        <div class="product-cards">
+            <div class="product-card titan">
+                <img src="/assets/images/titan.png" alt="TITAN Rank">
+                <h3>TITAN</h3>
+                <p>Price: ₹139 / $1.99</p>
+                <p>Full Netherite Armor, Netherite Sword, and more!</p>
+                <button class="buy-button" onclick="createCheckout('TITAN')">Buy Now</button>
+                <button class="details-button" onclick="showDetails('TITAN')">View Details</button>
+            </div>
+            <div class="product-card elite">
+                <img src="/assets/images/elite.png" alt="ELITE Rank">
+                <h3>ELITE</h3>
+                <p>Price: ₹79 / $1.09</p>
+                <p>Full Diamond Armor, Diamond Sword, and more!</p>
+                <button class="buy-button" onclick="createCheckout('ELITE')">Buy Now</button>
+                <button class="details-button" onclick="showDetails('ELITE')">View Details</button>
+            </div>
+            <div class="product-card svip">
+                <img src="/assets/images/svip.png" alt="SVIP Rank">
+                <h3>SVIP</h3>
+                <p>Price: ₹49 / $0.69</p>
+                <p>Full Diamond Armor, Diamond Sword, and more!</p>
+                <button class="buy-button" onclick="createCheckout('SVIP')">Buy Now</button>
+                <button class="details-button" onclick="showDetails('SVIP')">View Details</button>
+            </div>
+            <div class="product-card vip">
+                <img src="/assets/images/vip.png" alt="VIP Rank">
+                <h3>VIP</h3>
+                <p>Price: ₹29 / $0.39</p>
+                <p>Full Diamond Armor, Diamond Sword, and more!</p>
+                <button class="buy-button" onclick="createCheckout('VIP')">Buy Now</button>
+                <button class="details-button" onclick="showDetails('VIP')">View Details</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Minecraft Server. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
