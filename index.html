@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Minecraft Server</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#ranks">Ranks</a></li>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#login">Login</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Join Our Minecraft Adventure!</h1>
+            <button class="play-button">Play Now</button>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Us</h2>
+        <p>Welcome to our Minecraft server! We offer a unique gaming experience with a vibrant community.</p>
+    </section>
+
+    <section id="ranks">
+        <h2>Server Ranks</h2>
+        <div class="rank-cards">
+            <div class="rank-card">VIP</div>
+            <div class="rank-card">SVIP</div>
+            <div class="rank-card">ELITE</div>
+            <div class="rank-card">TITAN</div>
+            <div class="rank-card">CREATOR</div>
+        </div>
+    </section>
+
+    <section id="shop">
+        <h2>Shop</h2>
+        <button class="shop-button">Purchase Ranks</button>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form id="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Minecraft Server. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#">Discord</a>
+            <a href="#">Twitter</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
