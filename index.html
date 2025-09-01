@@ -165,3 +165,35 @@
 <a href="elite.html" target="_blank">ELITE Rank</a>
 <a href="titan.html" target="_blank">TITAN Rank</a>
 <a href="creator.html" target="_blank">CREATOR Rank</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Register Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Login Form -->
+    <div class="form-box" id="loginBox">
+      <h2>Login</h2>
+      <input type="text" id="loginUser" placeholder="Username">
+      <input type="password" id="loginPass" placeholder="Password">
+      <button onclick="login()">Login</button>
+      <p>Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+    </div>
+
+    <!-- Register Form -->
+    <div class="form-box hidden" id="registerBox">
+      <h2>Register</h2>
+      <input type="text" id="regUser" placeholder="Username">
+      <input type="email" id="regEmail" placeholder="Email">
+      <input type="password" id="regPass" placeholder="Password">
+      <button onclick="register()">Register</button>
+      <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
