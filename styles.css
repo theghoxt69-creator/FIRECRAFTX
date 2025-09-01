@@ -41,7 +41,7 @@ body {
 
 .hero {
     height: 100vh;
-    background: url('/assets/images/hero.png') no-repeat center center/cover;
+    background: url('https://i.imgur.com/H3Kpfh6.jpeg') no-repeat center center/cover;
     display: flex;
     flex-direction: column;
     justify-content: center;
