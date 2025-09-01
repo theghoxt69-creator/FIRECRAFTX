@@ -6,6 +6,69 @@
     <title>Shop - Minecraft Server Store</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Product Cards Layout */
+        .product-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Card Styling */
+        .product-card {
+            background: linear-gradient(145deg, #0a0f29, #111d47); /* Dark-Blue Gradient */
+            padding: 15px;
+            border-radius: 14px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.3); /* Glow effect */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 200, 255, 0.6);
+        }
+
+        /* Image Styling */
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        /* Buttons */
+        .buy-button, .details-button {
+            margin: 6px;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .buy-button {
+            background: #00c3ff;
+            color: #000;
+        }
+
+        .buy-button:hover {
+            background: #00a8d6;
+        }
+
+        .details-button {
+            background: #333;
+            color: #fff;
+        }
+
+        .details-button:hover {
+            background: #555;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -21,38 +84,43 @@
     <section class="shop">
         <h2>Featured Packages</h2>
         <div class="product-cards">
+            
             <div class="product-card titan">
-                <img src="/assets/images/titan.png" alt="TITAN Rank">
+                <img src="https://i.imgur.com/ezSswgO.jpeg" alt="TITAN Rank">
                 <h3>TITAN</h3>
                 <p>Price: ₹139 / $1.99</p>
                 <p>Full Netherite Armor, Netherite Sword, and more!</p>
                 <button class="buy-button" onclick="createCheckout('TITAN')">Buy Now</button>
                 <button class="details-button" onclick="showDetails('TITAN')">View Details</button>
             </div>
+            
             <div class="product-card elite">
-                <img src=https://i.imgur.com/c3gOoje.jpeg" alt="ELITE Rank">
+                <img src="https://i.imgur.com/vbVpelD.jpeg" alt="ELITE Rank">
                 <h3>ELITE</h3>
                 <p>Price: ₹79 / $1.09</p>
                 <p>Full Diamond Armor, Diamond Sword, and more!</p>
                 <button class="buy-button" onclick="createCheckout('ELITE')">Buy Now</button>
                 <button class="details-button" onclick="showDetails('ELITE')">View Details</button>
             </div>
+            
             <div class="product-card svip">
-                <img src="/assets/images/svip.png" alt="SVIP Rank">
+                <img src="https://i.imgur.com/xoDKA5Z.jpeg" alt="SVIP Rank">
                 <h3>SVIP</h3>
                 <p>Price: ₹49 / $0.69</p>
                 <p>Full Diamond Armor, Diamond Sword, and more!</p>
                 <button class="buy-button" onclick="createCheckout('SVIP')">Buy Now</button>
                 <button class="details-button" onclick="showDetails('SVIP')">View Details</button>
             </div>
+            
             <div class="product-card vip">
-                <img src="/assets/images/vip.png" alt="VIP Rank">
+                <img src="https://i.imgur.com/hFZI2pH.jpeg" alt="VIP Rank">
                 <h3>VIP</h3>
                 <p>Price: ₹29 / $0.39</p>
                 <p>Full Diamond Armor, Diamond Sword, and more!</p>
                 <button class="buy-button" onclick="createCheckout('VIP')">Buy Now</button>
                 <button class="details-button" onclick="showDetails('VIP')">View Details</button>
             </div>
+            
         </div>
     </section>
 
@@ -62,4 +130,4 @@
 
     <script src="script.js"></script>
 </body>
-</html>
+    </html>
