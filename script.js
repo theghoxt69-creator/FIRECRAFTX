@@ -63,3 +63,29 @@ function openDiscord() {
 
 // Example function to simulate player count
 document.getElementById('playerCount').innerText = Math.floor(Math.random() * 100);
+document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.getElementById("registerForm");
+  if (registerForm) {
+    registerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // Check agar email pehle se hai
+      if (users.find(u => u.email === email)) {
+        alert("Email already registered! Please login.");
+        return;
+      }
+
+      users.push({ username, email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      alert("Registration successful! Now you can login.");
+      window.location.href = "index.html"; // Login page pe bhej do
+    });
+  }
+});
