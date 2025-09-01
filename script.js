@@ -63,3 +63,25 @@ function openDiscord() {
 
 // Example function to simulate player count
 document.getElementById('playerCount').innerText = Math.floor(Math.random() * 100);
+function showRegister() {
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("registerBox").classList.remove("hidden");
+}
+
+function showLogin() {
+  document.getElementById("registerBox").classList.add("hidden");
+  document.getElementById("loginBox").classList.remove("hidden");
+}
+
+function login() {
+  const user = document.getElementById("loginUser").value;
+  const pass = document.getElementById("loginPass").value;
+  alert("Login attempt:\nUser: " + user + "\nPassword: " + pass);
+}
+
+function register() {
+  const user = document.getElementById("regUser").value;
+  const email = document.getElementById("regEmail").value;
+  const pass = document.getElementById("regPass").value;
+  alert("Register attempt:\nUser: " + user + "\nEmail: " + email + "\nPassword: " + pass);
+}
