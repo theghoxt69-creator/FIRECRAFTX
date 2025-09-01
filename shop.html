@@ -4,69 +4,294 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - Minecraft Server Store</title>
-    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Product Cards Layout */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e1dd;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(13, 27, 42, 0.9);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            color: #ffaa00;
+            font-size: 1.2rem;
+            text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
+        }
+        
+        .navbar ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .navbar ul li {
+            margin-left: 25px;
+        }
+        
+        .navbar ul li a {
+            color: #e0e1dd;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+        
+        .navbar ul li a:hover {
+            color: #ffaa00;
+            background: rgba(255, 170, 0, 0.1);
+        }
+        
+        .shop {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .shop h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            color: #ffaa00;
+            text-shadow: 0 0 10px rgba(255, 170, 0, 0.4);
+            font-family: 'Press Start 2P', cursive;
+        }
+        
         .product-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
         }
-
-        /* Card Styling */
+        
         .product-card {
-            background: linear-gradient(145deg, #0a0f29, #111d47); /* Dark-Blue Gradient */
-            padding: 15px;
+            background: linear-gradient(145deg, #0a0f29, #111d47);
+            padding: 20px;
             border-radius: 14px;
             text-align: center;
             color: #fff;
-            box-shadow: 0 0 15px rgba(0, 200, 255, 0.3); /* Glow effect */
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 450px;
         }
-
+        
         .product-card:hover {
-            transform: scale(1.05);
+            transform: translateY(-8px);
             box-shadow: 0 0 25px rgba(0, 200, 255, 0.6);
         }
-
-        /* Image Styling */
+        
+        .product-card.titan {
+            border: 2px solid #ff5555;
+            box-shadow: 0 0 15px rgba(255, 85, 85, 0.4);
+        }
+        
+        .product-card.elite {
+            border: 2px solid #55ff55;
+            box-shadow: 0 0 15px rgba(85, 255, 85, 0.4);
+        }
+        
+        .product-card.svip {
+            border: 2px solid #5555ff;
+            box-shadow: 0 0 15px rgba(85, 85, 255, 0.4);
+        }
+        
+        .product-card.vip {
+            border: 2px solid #ffff55;
+            box-shadow: 0 0 15px rgba(255, 255, 85, 0.4);
+        }
+        
         .product-card img {
             width: 100%;
-            height: 200px;
+            height: 160px;
             object-fit: cover;
             border-radius: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* Buttons */
+        
+        .product-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        .product-card.titan h3 {
+            color: #ff5555;
+        }
+        
+        .product-card.elite h3 {
+            color: #55ff55;
+        }
+        
+        .product-card.svip h3 {
+            color: #5555ff;
+        }
+        
+        .product-card.vip h3 {
+            color: #ffff55;
+        }
+        
+        .product-card p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .product-card .price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #ffaa00;
+        }
+        
+        .button-container {
+            margin-top: auto;
+            padding-top: 15px;
+        }
+        
         .buy-button, .details-button {
             margin: 6px;
-            padding: 10px 14px;
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.2s;
+            transition: all 0.3s;
+            width: calc(100% - 12px);
+            font-size: 1rem;
         }
-
+        
         .buy-button {
-            background: #00c3ff;
-            color: #000;
+            background: linear-gradient(to right, #00c3ff, #0077ff);
+            color: white;
         }
-
+        
         .buy-button:hover {
-            background: #00a8d6;
+            background: linear-gradient(to right, #00a8d6, #0066cc);
+            transform: scale(1.05);
         }
-
+        
         .details-button {
-            background: #333;
-            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e1dd;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
+        
         .details-button:hover {
-            background: #555;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            background: rgba(13, 27, 42, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .rank-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            width: 90%;
+            color: white;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 170, 0, 0.5);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .rank-logo {
+            display: block;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .navbar ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .navbar ul li {
+                margin: 5px;
+            }
+            
+            .product-cards {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -88,37 +313,45 @@
             <div class="product-card titan">
                 <img src="https://i.imgur.com/ezSswgO.jpeg" alt="TITAN Rank">
                 <h3>TITAN</h3>
-                <p>Price: ₹139 / $1.99</p>
                 <p>Full Netherite Armor, Netherite Sword, and more!</p>
-                <button class="buy-button" onclick="createCheckout('TITAN')">Buy Now</button>
-                <button class="details-button" onclick="showDetails('TITAN')">View Details</button>
+                <div class="price">Price: ₹139 / $1.99</div>
+                <div class="button-container">
+                    <button class="buy-button" onclick="createCheckout('TITAN')">Buy Now</button>
+                    <button class="details-button" onclick="showDetails('TITAN')">View Details</button>
+                </div>
             </div>
             
             <div class="product-card elite">
                 <img src="https://i.imgur.com/vbVpelD.jpeg" alt="ELITE Rank">
                 <h3>ELITE</h3>
-                <p>Price: ₹79 / $1.09</p>
                 <p>Full Diamond Armor, Diamond Sword, and more!</p>
-                <button class="buy-button" onclick="createCheckout('ELITE')">Buy Now</button>
-                <button class="details-button" onclick="showDetails('ELITE')">View Details</button>
+                <div class="price">Price: ₹79 / $1.09</div>
+                <div class="button-container">
+                    <button class="buy-button" onclick="createCheckout('ELITE')">Buy Now</button>
+                    <button class="details-button" onclick="showDetails('ELITE')">View Details</button>
+                </div>
             </div>
             
             <div class="product-card svip">
                 <img src="https://i.imgur.com/xoDKA5Z.jpeg" alt="SVIP Rank">
                 <h3>SVIP</h3>
-                <p>Price: ₹49 / $0.69</p>
                 <p>Full Diamond Armor, Diamond Sword, and more!</p>
-                <button class="buy-button" onclick="createCheckout('SVIP')">Buy Now</button>
-                <button class="details-button" onclick="showDetails('SVIP')">View Details</button>
+                <div class="price">Price: ₹49 / $0.69</div>
+                <div class="button-container">
+                    <button class="buy-button" onclick="createCheckout('SVIP')">Buy Now</button>
+                    <button class="details-button" onclick="showDetails('SVIP')">View Details</button>
+                </div>
             </div>
             
             <div class="product-card vip">
                 <img src="https://i.imgur.com/hFZI2pH.jpeg" alt="VIP Rank">
                 <h3>VIP</h3>
-                <p>Price: ₹29 / $0.39</p>
                 <p>Full Diamond Armor, Diamond Sword, and more!</p>
-                <button class="buy-button" onclick="createCheckout('VIP')">Buy Now</button>
-                <button class="details-button" onclick="showDetails('VIP')">View Details</button>
+                <div class="price">Price: ₹29 / $0.39</div>
+                <div class="button-container">
+                    <button class="buy-button" onclick="createCheckout('VIP')">Buy Now</button>
+                    <button class="details-button" onclick="showDetails('VIP')">View Details</button>
+                </div>
             </div>
             
         </div>
@@ -128,6 +361,173 @@
         <p>&copy; 2023 Minecraft Server. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Modal for Rank Details -->
+    <div id="rankModal" class="rank-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to show rank details in modal
+        function showDetails(rank) {
+            const modal = document.getElementById('rankModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            let content = '';
+            
+            switch(rank) {
+                case 'VIP':
+                    content = `
+                        <img src="https://i.imgur.com/hFZI2pH.jpeg" alt="VIP Logo" class="rank-logo">
+                        <h1>⭐ VIP Rank ⭐</h1>
+                        <p>The <strong>VIP</strong> rank is the best starter upgrade for new players.</p>
+                        
+                        <h2>✨ Features:</h2>
+                        <ul>
+                            <li>Full Diamond Armor (Prot I, Unb I)</li>
+                            <li>Diamond Sword (Sharp I, Unb I)</li>
+                            <li>Diamond Pickaxe (Eff I, Unb I)</li>
+                            <li>Bow (Power I)</li>
+                            <li>Golden Apple ×4</li>
+                            <li>Ender Pearl ×4</li>
+                            <li>3,000 Coins, 1 Random Crate Key</li>
+                            <li>Special Commands: /ec, /wb, /anvil, /furnace, /spawn, /home, /bal, /repair</li>
+                        </ul>
+
+                        <h2>💰 Price:</h2>
+                        <p><strong>₹29 / $0.39</strong></p>
+
+                        <h2>🔗 Connect:</h2>
+                        <p>
+                            <a href="https://discord.gg/yourserver" target="_blank">Join Discord</a> | 
+                            <a href="https://instagram.com/yourpage" target="_blank">Follow Instagram</a>
+                        </p>
+
+                        <a href="javascript:void(0)" onclick="closeModal()" class="back-btn">⬅ Back to Ranks</a>
+                    `;
+                    break;
+                    
+                case 'SVIP':
+                    content = `
+                        <img src="https://i.imgur.com/xoDKA5Z.jpeg" alt="SVIP Logo" class="rank-logo">
+                        <h1>✨ SVIP Rank ✨</h1>
+                        <p>The <strong>SVIP</strong> rank offers enhanced perks for dedicated players.</p>
+                        
+                        <h2>✨ Features:</h2>
+                        <ul>
+                            <li>Full Diamond Armor (Prot II, Unb II)</li>
+                            <li>Diamond Sword (Sharp II, Unb II)</li>
+                            <li>Diamond Pickaxe (Eff II, Unb II)</li>
+                            <li>Bow (Power II, Flame I)</li>
+                            <li>Golden Apple ×8</li>
+                            <li>Ender Pearl ×8</li>
+                            <li>6,000 Coins, 2 Random Crate Keys</li>
+                            <li>Special Commands: All VIP commands plus /feed, /hat, /craft</li>
+                        </ul>
+
+                        <h2>💰 Price:</h2>
+                        <p><strong>₹49 / $0.69</strong></p>
+
+                        <h2>🔗 Connect:</h2>
+                        <p>
+                            <a href="https://discord.gg/yourserver" target="_blank">Join Discord</a> | 
+                            <a href="https://instagram.com/yourpage" target="_blank">Follow Instagram</a>
+                        </p>
+
+                        <a href="javascript:void(0)" onclick="closeModal()" class="back-btn">⬅ Back to Ranks</a>
+                    `;
+                    break;
+                    
+                case 'ELITE':
+                    content = `
+                        <img src="https://i.imgur.com/vbVpelD.jpeg" alt="ELITE Logo" class="rank-logo">
+                        <h1>🔥 ELITE Rank 🔥</h1>
+                        <p>The <strong>ELITE</strong> rank provides premium benefits for serious players.</p>
+                        
+                        <h2>✨ Features:</h2>
+                        <ul>
+                            <li>Full Diamond Armor (Prot III, Unb III)</li>
+                            <li>Diamond Sword (Sharp III, Unb III, Fire Aspect I)</li>
+                            <li>Diamond Pickaxe (Eff III, Unb III, Fortune I)</li>
+                            <li>Bow (Power III, Flame I, Punch I)</li>
+                            <li>Golden Apple ×16</li>
+                            <li>Ender Pearl ×16</li>
+                            <li>12,000 Coins, 4 Random Crate Keys</li>
+                            <li>Special Commands: All SVIP commands plus /ptime, /pweather, /nick</li>
+                        </ul>
+
+                        <h2>💰 Price:</h2>
+                        <p><strong>₹79 / $1.09</strong></p>
+
+                        <h2>🔗 Connect:</h2>
+                        <p>
+                            <a href="https://discord.gg/yourserver" target="_blank">Join Discord</a> | 
+                            <a href="https://instagram.com/yourpage" target="_blank">Follow Instagram</a>
+                        </p>
+
+                        <a href="javascript:void(0)" onclick="closeModal()" class="back-btn">⬅ Back to Ranks</a>
+                    `;
+                    break;
+                    
+                case 'TITAN':
+                    content = `
+                        <img src="https://i.imgur.com/ezSswgO.jpeg" alt="TITAN Logo" class="rank-logo">
+                        <h1>💎 TITAN Rank 💎</h1>
+                        <p>The <strong>TITAN</strong> rank is the ultimate package for the most dedicated players.</p>
+                        
+                        <h2>✨ Features:</h2>
+                        <ul>
+                            <li>Full Netherite Armor (Prot IV, Unb III, Thorns II)</li>
+                            <li>Netherite Sword (Sharp V, Unb III, Fire Aspect II, Looting III)</li>
+                            <li>Netherite Pickaxe (Eff V, Unb III, Fortune III, Silk Touch)</li>
+                            <li>Bow (Power V, Flame I, Punch II, Infinity)</li>
+                            <li>Golden Apple ×32, Enchanted Golden Apple ×4</li>
+                            <li>Ender Pearl ×32</li>
+                            <li>24,000 Coins, 8 Random Crate Keys, 1 Legendary Key</li>
+                            <li>Special Commands: All ELITE commands plus /fly, /vanish, /repair all</li>
+                        </ul>
+
+                        <h2>💰 Price:</h2>
+                        <p><strong>₹139 / $1.99</strong></p>
+
+                        <h2>🔗 Connect:</h2>
+                        <p>
+                            <a href="https://discord.gg/yourserver" target="_blank">Join Discord</a> | 
+                            <a href="https://instagram.com/yourpage" target="_blank">Follow Instagram</a>
+                        </p>
+
+                        <a href="javascript:void(0)" onclick="closeModal()" class="back-btn">⬅ Back to Ranks</a>
+                    `;
+                    break;
+            }
+            
+            modalContent.innerHTML = content;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Function to close the modal
+        function closeModal() {
+            const modal = document.getElementById('rankModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('rankModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Function to simulate checkout process
+        function createCheckout(rank) {
+            alert(`Starting checkout process for ${rank} rank!`);
+            // In a real implementation, this would redirect to a payment page
+        }
+    </script>
 </body>
-    </html>
+                    </html>
