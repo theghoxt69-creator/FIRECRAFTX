@@ -158,3 +158,40 @@ footer a {
 footer a:hover {
   color: #fff;
 }
+.auth-container {
+  width: 300px;
+  margin: 100px auto;
+  padding: 20px;
+  background: rgba(0,0,0,0.7);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.auth-container h2 {
+  margin-bottom: 15px;
+}
+
+.auth-container input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: none;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #ff6600;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-container button:hover {
+  background: #e65c00;
+}
