@@ -252,3 +252,106 @@ footer {
         margin: 10px 0;
     }
         }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.navbar {
+  background: linear-gradient(90deg, #ff4500, #ffcc00);
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .logo {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 18px;
+  color: #fff;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.navbar ul li a:hover,
+.navbar ul li a.active {
+  color: #000;
+}
+
+.ranks {
+  text-align: center;
+  padding: 40px;
+}
+
+.ranks h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 28px;
+  margin-bottom: 30px;
+  background: linear-gradient(to right, #ff0080, #7928ca);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+table {
+  width: 95%;
+  margin: auto;
+  border-collapse: collapse;
+  background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
+}
+
+th, td {
+  padding: 15px;
+  border: 1px solid #333;
+}
+
+th {
+  background: #222;
+  color: #ffcc00;
+}
+
+tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transition: 0.3s;
+}
+
+.not-allowed {
+  color: #888;
+  text-decoration: line-through;
+}
+
+/* Rank colors */
+tr.titan td:first-child { color: gold; font-weight: bold; }
+tr.elite td:first-child { color: #1e90ff; font-weight: bold; }
+tr.svip td:first-child { color: #da70d6; font-weight: bold; }
+tr.vip td:first-child { color: #32cd32; font-weight: bold; }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;
+  background: #111;
+  border-top: 2px solid #ff4500;
+}
+footer a {
+  color: #ffcc00;
+  text-decoration: none;
+}
+footer a:hover {
+  color: #fff;
+    }
