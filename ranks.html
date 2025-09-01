@@ -4,17 +4,334 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ranks - FIRECRAFTX</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #ff6b35;
+      --primary-dark: #e85a2a;
+      --secondary: #f7931e;
+      --dark: #1a1a2e;
+      --darker: #0d0d1a;
+      --light: #f5f5f5;
+      --gray: #4a4a68;
+      --success: #4ecdc4;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--darker), var(--dark));
+      color: var(--light);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--gray);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 5px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* Navbar */
+    .navbar {
+      background: rgba(26, 26, 46, 0.95);
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--primary);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .navbar .logo {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.4rem;
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+    }
+    
+    .navbar ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+    
+    .navbar ul li a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding: 8px 12px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .navbar ul li a:hover {
+      color: var(--primary);
+      background: rgba(255, 107, 53, 0.1);
+    }
+    
+    .navbar ul li a.active {
+      color: var(--primary);
+      background: rgba(255, 107, 53, 0.15);
+    }
+    
+    /* Ranks Section */
+    .ranks {
+      padding: 40px 20px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    
+    .ranks h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(255, 107, 53, 0.4);
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .ranks h2:after {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 4px;
+      background: var(--primary);
+      bottom: -10px;
+      left: 20%;
+      border-radius: 2px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 auto;
+      background: rgba(26, 26, 46, 0.7);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    
+    thead {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    
+    th {
+      padding: 20px 15px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    th:first-child {
+      border-top-left-radius: 12px;
+    }
+    
+    th:last-child {
+      border-top-right-radius: 12px;
+    }
+    
+    td {
+      padding: 18px 15px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    /* Rank-specific styling */
+    tr.titan {
+      background: linear-gradient(90deg, rgba(120, 40, 200, 0.1), rgba(120, 40, 200, 0.05));
+    }
+    
+    tr.titan td:first-child {
+      border-left: 4px solid #7828c8;
+    }
+    
+    tr.elite {
+      background: linear-gradient(90deg, rgba(0, 180, 216, 0.1), rgba(0, 180, 216, 0.05));
+    }
+    
+    tr.elite td:first-child {
+      border-left: 4px solid #00b4d8;
+    }
+    
+    tr.svip {
+      background: linear-gradient(90deg, rgba(58, 134, 255, 0.1), rgba(58, 134, 255, 0.05));
+    }
+    
+    tr.svip td:first-child {
+      border-left: 4px solid #3a86ff;
+    }
+    
+    tr.vip {
+      background: linear-gradient(90deg, rgba(255, 183, 3, 0.1), rgba(255, 183, 3, 0.05));
+    }
+    
+    tr.vip td:first-child {
+      border-left: 4px solid #ffb703;
+    }
+    
+    /* Rank name cells */
+    td:first-child {
+      font-weight: 700;
+      font-size: 1.1rem;
+      white-space: nowrap;
+    }
+    
+    tr.titan td:first-child {
+      color: #7828c8;
+    }
+    
+    tr.elite td:first-child {
+      color: #00b4d8;
+    }
+    
+    tr.svip td:first-child {
+      color: #3a86ff;
+    }
+    
+    tr.vip td:first-child {
+      color: #ffb703;
+    }
+    
+    .not-allowed {
+      color: #ff4d4d !important;
+      text-decoration: line-through;
+    }
+    
+    /* Hover effects */
+    tbody tr {
+      transition: all 0.3s;
+    }
+    
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.05) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--darker);
+      padding: 30px 20px;
+      text-align: center;
+      margin-top: 60px;
+      border-top: 1px solid rgba(255, 107, 53, 0.3);
+    }
+    
+    footer p {
+      color: var(--light);
+      margin-bottom: 15px;
+    }
+    
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    footer a:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+      
+      th, td {
+        min-width: 180px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+      }
+      
+      .navbar ul {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .ranks h2 {
+        font-size: 2rem;
+      }
+      
+      th, td {
+        padding: 12px 10px;
+        font-size: 0.9rem;
+      }
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    tbody tr {
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    tbody tr:nth-child(1) { animation-delay: 0.1s; }
+    tbody tr:nth-child(2) { animation-delay: 0.2s; }
+    tbody tr:nth-child(3) { animation-delay: 0.3s; }
+    tbody tr:nth-child(4) { animation-delay: 0.4s; }
+  </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="logo">🔥 FIRECRAFTX</div>
     <ul>
-      <li><a href="index.html">🏠 Home</a></li>
-      <li><a href="shop.html">🛒 Store</a></li>
-      <li><a href="ranks.html" class="active">⭐ Ranks</a></li>
-      <li><a href="login.html">🔑 Login</a></li>
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="shop.html"><i class="fas fa-shopping-cart"></i> Store</a></li>
+      <li><a href="ranks.html" class="active"><i class="fas fa-crown"></i> Ranks</a></li>
+      <li><a href="login.html"><i class="fas fa-key"></i> Login</a></li>
     </ul>
   </nav>
 
@@ -69,9 +386,26 @@
   </section>
 
   <footer>
-    <p>© 2025 FIRECRAFTX. All rights reserved. | Join our <a href="https://discord.gg/YOUR_DISCORD" target="_blank">Discord</a></p>
+    <p>© 2025 FIRECRAFTX. All rights reserved. | Join our <a href="https://discord.gg/YOUR_DISCORD" target="_blank"><i class="fab fa-discord"></i> Discord</a></p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Add subtle animation to table rows on hover
+    document.addEventListener('DOMContentLoaded', function() {
+      const rows = document.querySelectorAll('tbody tr');
+      
+      rows.forEach(row => {
+        row.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-3px)';
+          this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+        });
+        
+        row.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+          this.style.boxShadow = 'none';
+        });
+      });
+    });
+  </script>
 </body>
-</html>
+  </html>
