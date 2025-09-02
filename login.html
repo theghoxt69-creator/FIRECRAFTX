@@ -3,60 +3,695 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - FIRECRAFTX</title>
+  <title>Register - FIRECRAFTX</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #ff6b35;
+      --primary-dark: #e85a2a;
+      --secondary: #f7931e;
+      --dark: #1a1a2e;
+      --darker: #0d0d1a;
+      --light: #f5f5f5;
+      --gray: #4a4a68;
+      --success: #4ecdc4;
+      --error: #ff6b6b;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
     body {
-      font-family: Arial, sans-serif;
-      background: #0d1117;
-      color: white;
+      background: linear-gradient(135deg, var(--darker), var(--dark));
+      color: var(--light);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding: 20px;
     }
-    .form-box {
-      background: #161b22;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      width: 300px;
+    
+    .container {
+      display: flex;
+      max-width: 1000px;
+      width: 100%;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     }
-    .form-box h2 {
+    
+    .brand-side {
+      flex: 1;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
+      position: relative;
+    }
+    
+    .brand-logo {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .brand-side h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .brand-side p {
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+    
+    .brand-features {
+      text-align: left;
+      margin-top: 30px;
+    }
+    
+    .brand-features div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .brand-features i {
+      color: var(--light);
+      background: rgba(255, 255, 255, 0.2);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+    }
+    
+    .form-side {
+      flex: 1.5;
+      background: rgba(26, 26, 46, 0.9);
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+    
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .form-header h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    
+    .form-header p {
+      color: #ccc;
+    }
+    
+    .form-tabs {
+      display: flex;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .form-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .form-tab.active {
+      background: var(--primary);
+      font-weight: 600;
+    }
+    
+    .form-group {
       margin-bottom: 20px;
     }
-    .form-box input {
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-group label i {
+      margin-right: 10px;
+      color: var(--primary);
+    }
+    
+    .input-with-icon {
+      position: relative;
+    }
+    
+    .input-with-icon i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+    
+    .input-with-icon input, .input-with-icon select {
+      padding-left: 45px;
+    }
+    
+    .form-group input, .form-group select, .form-group textarea {
       width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 6px;
+      padding: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--light);
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--primary);
       outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
     }
-    .form-box button {
+    
+    .form-row {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
+    }
+    
+    .terms {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .terms input {
+      margin-right: 10px;
+    }
+    
+    .terms label {
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+    
+    .terms a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .terms a:hover {
+      text-decoration: underline;
+    }
+    
+    .btn {
       width: 100%;
-      padding: 10px;
-      background: #238636;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       color: white;
-      font-size: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
       cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
     }
-    .form-box button:hover {
-      background: #2ea043;
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 107, 53, 0.6);
+    }
+    
+    .btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .social-login {
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .social-login p {
+      margin-bottom: 15px;
+      color: #ccc;
+      position: relative;
+    }
+    
+    .social-login p:before, .social-login p:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .social-login p:before {
+      left: 0;
+    }
+    
+    .social-login p:after {
+      right: 0;
+    }
+    
+    .social-buttons {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .social-btn.discord {
+      background: #5865f2;
+      color: white;
+    }
+    
+    .social-btn.google {
+      background: #db4437;
+      color: white;
+    }
+    
+    .social-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .error {
+      color: var(--error);
+      font-size: 0.9rem;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background: rgba(78, 205, 196, 0.1);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border: 1px solid var(--success);
+    }
+    
+    .success-message i {
+      color: var(--success);
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+    
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      
+      .brand-side {
+        padding: 30px 20px;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+      
+      .social-buttons {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="form-box">
-    <h2>Enter Details</h2>
-    <form action="https://formspree.io/f/manddpay" method="POST">
-      <input type="text" name="instagram_id" placeholder="Instagram ID" required>
-      <input type="text" name="gamertag" placeholder="Gamertag" required>
-      <button type="submit">Submit</button>
-    </form>
+  <div class="container">
+    <div class="brand-side">
+      <div class="brand-logo">🔥 FIRECRAFTX</div>
+      <h1>Join Our Community</h1>
+      <p>Register now to access exclusive features and content</p>
+      <div class="brand-features">
+        <div>
+          <i class="fas fa-shield-alt"></i>
+          <span>Secure gameplay</span>
+        </div>
+        <div>
+          <i class="fas fa-users"></i>
+          <span>Active community</span>
+        </div>
+        <div>
+          <i class="fas fa-crown"></i>
+          <span>Exclusive ranks</span>
+        </div>
+        <div>
+          <i class="fas fa-calendar-alt"></i>
+          <span>Regular events</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-side">
+      <div class="form-header">
+        <h2>Create Account</h2>
+        <p>Join thousands of players in our Minecraft server</p>
+      </div>
+      
+      <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <h3>Registration Successful!</h3>
+        <p>Thank you for registering. We've sent a confirmation email.</p>
+      </div>
+      
+      <div class="form-tabs">
+        <div class="form-tab active" id="registerTab">Register</div>
+        <div class="form-tab" id="loginTab">Login</div>
+      </div>
+      
+      <form id="registrationForm" action="https://formspree.io/f/manddpay" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName"><i class="fas fa-user"></i> First Name</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user"></i>
+              <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="error" id="firstNameError">Please enter your first name</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user"></i>
+              <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="error" id="lastNameError">Please enter your last name</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="gamertag"><i class="fas fa-gamepad"></i> GamerTag</label>
+          <div class="input-with-icon">
+            <i class="fas fa-gamepad"></i>
+            <input type="text" id="gamertag" name="gamertag" required>
+          </div>
+          <div class="error" id="gamertagError">Please enter your GamerTag</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="ign"><i class="fas fa-id-badge"></i> Minecraft IGN</label>
+          <div class="input-with-icon">
+            <i class="fas fa-id-badge"></i>
+            <input type="text" id="ign" name="ign" required>
+          </div>
+          <div class="error" id="ignError">Please enter your Minecraft IGN</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email</label>
+          <div class="input-with-icon">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="error" id="emailError">Please enter a valid email address</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Password</label>
+          <div class="input-with-icon">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <div class="error" id="passwordError">Password must be at least 8 characters</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword"><i class="fas fa-lock"></i> Confirm Password</label>
+          <div class="input-with-icon">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+          </div>
+          <div class="error" id="confirmPasswordError">Passwords do not match</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="discord"><i class="fab fa-discord"></i> Discord ID</label>
+          <div class="input-with-icon">
+            <i class="fab fa-discord"></i>
+            <input type="text" id="discord" name="discord" placeholder="Username#1234" required>
+          </div>
+          <div class="error" id="discordError">Please enter your Discord ID</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="insta"><i class="fab fa-instagram"></i> Instagram ID</label>
+          <div class="input-with-icon">
+            <i class="fab fa-instagram"></i>
+            <input type="text" id="insta" name="insta" placeholder="@username">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+            <div class="input-with-icon">
+              <i class="fas fa-phone"></i>
+              <input type="tel" id="phone" name="phone">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="dob"><i class="fas fa-birthday-cake"></i> Date of Birth</label>
+            <input type="date" id="dob" name="dob">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+            <select id="gender" name="gender">
+              <option value="">-- Select --</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="country"><i class="fas fa-globe"></i> Country</label>
+            <div class="input-with-icon">
+              <i class="fas fa-globe"></i>
+              <input type="text" id="country" name="country">
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="fav"><i class="fas fa-heart"></i> Favorite Game Mode</label>
+          <select id="fav" name="fav">
+            <option value="">-- Select --</option>
+            <option>Survival</option>
+            <option>Creative</option>
+            <option>Hardcore</option>
+            <option>Skyblock</option>
+            <option>Bed Wars</option>
+            <option>Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="referral"><i class="fas fa-user-friends"></i> Referral Code (Optional)</label>
+          <div class="input-with-icon">
+            <i class="fas fa-user-friends"></i>
+            <input type="text" id="referral" name="referral">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="how"><i class="fas fa-info-circle"></i> How did you hear about us?</label>
+          <select id="how" name="how">
+            <option value="">-- Select --</option>
+            <option>Friend</option>
+            <option>YouTube</option>
+            <option>Discord</option>
+            <option>Instagram</option>
+            <option>Google Search</option>
+            <option>Other</option>
+          </select>
+        </div>
+        
+        <div class="terms">
+          <input type="checkbox" id="terms" name="terms" required>
+          <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+        <div class="error" id="termsError">You must agree to the terms</div>
+        
+        <input type="hidden" name="_subject" value="FIRECRAFTX Registration - New User">
+        <input type="hidden" name="_template" value="table">
+        
+        <button type="submit" class="btn" id="submitBtn">
+          <span id="btnText">Create Account</span>
+        </button>
+        
+        <div class="social-login">
+          <p>Or register with</p>
+          <div class="social-buttons">
+            <button type="button" class="social-btn discord">
+              <i class="fab fa-discord"></i> Discord
+            </button>
+            <button type="button" class="social-btn google">
+              <i class="fab fa-google"></i> Google
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-</body>
-</html>
+
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Basic validation
+      let isValid = true;
+      
+      // First Name validation
+      if (!document.getElementById('firstName').value.trim()) {
+        document.getElementById('firstNameError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('firstNameError').style.display = 'none';
+      }
+      
+      // Email validation
+      const email = document.getElementById('email').value;
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('emailError').style.display = 'none';
+      }
+      
+      // Password validation
+      const password = document.getElementById('password').value;
+      if (!password || password.length < 8) {
+        document.getElementById('passwordError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('passwordError').style.display = 'none';
+      }
+      
+      // Confirm Password validation
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('confirmPasswordError').style.display = 'none';
+      }
+      
+      // Terms validation
+      if (!document.getElementById('terms').checked) {
+        document.getElementById('termsError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('termsError').style.display = 'none';
+      }
+      
+      if (isValid) {
+        // Show loading state
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        submitBtn.disabled = true;
+        btnText.innerHTML = '<div class="loading"></div> Processing...';
+        
+        try {
+          // Submit the form to Formspree
+          const formData = new FormData(this);
+          const response = await fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+          
+          if (response.ok) {
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            this.reset();
+            
+            // Reset button text after 3 seconds
+            setTimeout(() => {
+              btnText.innerHTML = 'Create Account';
+              submitBtn.disabled = false;
+            }, 3000);
+          } else {
+            throw new Error('Form submission failed');
+          }
+        } catch (error) {
+          alert('There was an error submitting the form. Please try again.');
+          btnText.innerHTML = 'Create Account';
+          submitBtn.disabled = false;
+        }
+      }
+    });
+    
+    // Tab switching functionality
+    document.querySelectorAll('.form-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Here you would switch between login and register forms
+        if (this.textContent === 'Login') {
+          document.querySelector('.form-header h2').textContent = 'Login to Your Account';
+          document.querySelector('.form-header p').textContent = 'Welcome back to FIRECRAFTX';
+          document.querySelector('.btn').textContent = 'Login';
+          docu
