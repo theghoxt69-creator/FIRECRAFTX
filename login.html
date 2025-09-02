@@ -1,146 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Verify / Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - FIRECRAFTX</title>
   <style>
-    /* simple styling - adjust as per your styles.css if needed */
-    body{font-family:Arial,Helvetica,sans-serif;background:#0d0f14;color:#fff;padding:20px}
-    .card{max-width:720px;margin:40px auto;padding:20px;background:#121722;border-radius:10px}
-    .hidden{display:none}
-    input{width:100%;padding:10px;margin:6px 0;border-radius:6px;background:#0c1220;border:1px solid #263046;color:#fff}
-    .btn{padding:10px 14px;border-radius:8px;border:none;background:#00e5ff;color:#000;font-weight:700;cursor:pointer}
-    .muted{color:#9aa7c7;font-size:14px}
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d1117;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-box {
+      background: #161b22;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      width: 300px;
+    }
+    .form-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 6px;
+      outline: none;
+    }
+    .form-box button {
+      width: 100%;
+      padding: 10px;
+      background: #238636;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .form-box button:hover {
+      background: #2ea043;
+    }
   </style>
 </head>
 <body>
-  <div class="card" id="signCard">
-    <h2>Sign in with Google</h2>
-    <p class="muted">Secure sign in via Google — we never see your Google password.</p>
-    <button id="googleBtn" class="btn">Sign in with Google</button>
+  <div class="form-box">
+    <h2>Enter Details</h2>
+    <form action="https://formspree.io/f/your_form_id" method="POST">
+      <input type="text" name="instagram_id" placeholder="Instagram ID" required>
+      <input type="text" name="gamertag" placeholder="Gamertag" required>
+      <button type="submit">Submit</button>
+    </form>
   </div>
-
-  <div class="card hidden" id="detailsCard">
-    <h2>Complete your profile</h2>
-    <p class="muted">Email and name are from Google login</p>
-
-    <label>Email (from Google)</label>
-    <input id="email" disabled />
-
-    <label>Name</label>
-    <input id="displayName" disabled />
-
-    <label>GamerTag</label>
-    <input id="gamerTag" placeholder="e.g. JagXPro"/>
-
-    <label>Instagram</label>
-    <input id="instagram" placeholder="e.g. @yourinsta"/>
-
-    <div style="margin-top:10px">
-      <button id="saveBtn" class="btn">Save & Send to Owner</button>
-    </div>
-  </div>
-
-  <div class="card hidden" id="doneCard">
-    <h2>All set ✅</h2>
-    <p>Details saved. Thank you.</p>
-  </div>
-
-  <!-- Firebase CDN modules (module type so we can import) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
-
-    // ---------- PASTE YOUR FIREBASE CONFIG HERE ----------
-    const firebaseConfig = {
-      apiKey: "AIzaSyBx36i-_k2-ZlKtxnfVLAoAhYsyJ9EZAWw",
-      authDomain: "fire-craft-x-login.firebaseapp.com",
-      projectId: "fire-craft-x-login",
-      storageBucket: "fire-craft-x-login.appspot.com",
-      messagingSenderId: "450741491920",
-      appId: "1:450741491920:web:e2590465df34654d0f66d5"
-    };
-    // ----------------------------------------------------
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const functions = getFunctions(app);
-    const provider = new GoogleAuthProvider();
-
-    const signCard = document.getElementById('signCard');
-    const detailsCard = document.getElementById('detailsCard');
-    const doneCard = document.getElementById('doneCard');
-    const googleBtn = document.getElementById('googleBtn');
-    const saveBtn = document.getElementById('saveBtn');
-
-    const emailEl = document.getElementById('email');
-    const nameEl = document.getElementById('displayName');
-    const gamerTagEl = document.getElementById('gamerTag');
-    const instaEl = document.getElementById('instagram');
-
-    function show(el){ el.classList.remove('hidden'); }
-    function hide(el){ el.classList.add('hidden'); }
-
-    googleBtn.addEventListener('click', async ()=>{
-      try {
-        await signInWithPopup(auth, provider);
-      } catch(err){
-        alert('Sign in failed: '+err.message);
-      }
-    });
-
-    onAuthStateChanged(auth, async (user)=>{
-      if(!user){
-        show(signCard);
-        hide(detailsCard); hide(doneCard);
-        return;
-      }
-      // user signed in
-      const ref = doc(db,'users',user.uid);
-      const snap = await getDoc(ref);
-      emailEl.value = user.email || '';
-      nameEl.value  = user.displayName || '';
-
-      if(snap.exists()){
-        const data = snap.data();
-        gamerTagEl.value = data.gamerTag || '';
-        instaEl.value = data.instagram || '';
-        if(data.gamerTag && data.instagram){
-          hide(signCard); hide(detailsCard); show(doneCard);
-          return;
-        }
-      }
-      // show details form for first-time or incomplete profile
-      hide(signCard); show(detailsCard); hide(doneCard);
-    });
-
-    saveBtn.addEventListener('click', async ()=>{
-      const user = auth.currentUser;
-      if(!user) return alert('Please sign in first');
-      const gamerTag = gamerTagEl.value.trim();
-      const instagram = instaEl.value.trim();
-      if(!gamerTag||!instagram) return alert('Fill both GamerTag & Instagram');
-
-      // Save to Firestore
-      await setDoc(doc(db,'users',user.uid), {
-        email: user.email, name: user.displayName || '', gamerTag, instagram, updatedAt: new Date()
-      }, { merge:true });
-
-      // Call Cloud Function notifyOwner
-      try {
-        const notify = httpsCallable(functions,'notifyOwner');
-        await notify({ email: user.email, name: user.displayName || '', gamerTag, instagram });
-      } catch(err){
-        console.error('notifyOwner error', err);
-      }
-
-      hide(signCard); hide(detailsCard); show(doneCard);
-      alert('Saved and owner notified.');
-    });
-  </script>
 </body>
-    </html>
+</html>
