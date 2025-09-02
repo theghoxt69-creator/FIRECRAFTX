@@ -1,38 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Minecraft Server Store</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Verify / Login</title>
+  <style>
+    /* simple styling - adjust as per your styles.css if needed */
+    body{font-family:Arial,Helvetica,sans-serif;background:#0d0f14;color:#fff;padding:20px}
+    .card{max-width:720px;margin:40px auto;padding:20px;background:#121722;border-radius:10px}
+    .hidden{display:none}
+    input{width:100%;padding:10px;margin:6px 0;border-radius:6px;background:#0c1220;border:1px solid #263046;color:#fff}
+    .btn{padding:10px 14px;border-radius:8px;border:none;background:#00e5ff;color:#000;font-weight:700;cursor:pointer}
+    .muted{color:#9aa7c7;font-size:14px}
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">Minecraft Server</div>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Store</a></li>
-            <li><a href="ranks.html">Ranks</a></li>
-            <li><a href="login.html">Login</a></li>
-        </ul>
-    </nav>
+  <div class="card" id="signCard">
+    <h2>Sign in with Google</h2>
+    <p class="muted">Secure sign in via Google — we never see your Google password.</p>
+    <button id="googleBtn" class="btn">Sign in with Google</button>
+  </div>
 
-    <section class="login">
-        <h2>Login</h2>
-        <form id="login-form">
-            <input type="text" placeholder="Username" required>
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <div class="g-recaptcha" data-sitekey="6Lf8a7MrAAAAAEsCMp2dMIsLi6b-1olq_k42tchw"></div>
-            <button type="submit">Login</button>
-        </form>
-    </section>
+  <div class="card hidden" id="detailsCard">
+    <h2>Complete your profile</h2>
+    <p class="muted">Email and name are from Google login</p>
 
-    <footer>
-        <p>&copy; 2023 Minecraft Server. All rights reserved.</p>
-    </footer>
+    <label>Email (from Google)</label>
+    <input id="email" disabled />
 
-    <script src="script.js"></script>
+    <label>Name</label>
+    <input id="displayName" disabled />
+
+    <label>GamerTag</label>
+    <input id="gamerTag" placeholder="e.g. JagXPro"/>
+
+    <label>Instagram</label>
+    <input id="instagram" placeholder="e.g. @yourinsta"/>
+
+    <div style="margin-top:10px">
+      <button id="saveBtn" class="btn">Save & Send to Owner</button>
+    </div>
+  </div>
+
+  <div class="card hidden" id="doneCard">
+    <h2>All set ✅</h2>
+    <p>Details saved. Thank you.</p>
+  </div>
+
+  <!-- Firebase CDN modules (module type so we can import) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
+
+    // ---------- PASTE YOUR FIREBASE CONFIG HERE ----------
+    const firebaseConfig = {
+      apiKey: "AIzaSyBx36i-_k2-ZlKtxnfVLAoAhYsyJ9EZAWw",
+      authDomain: "fire-craft-x-login.firebaseapp.com",
+      projectId: "fire-craft-x-login",
+      storageBucket: "fire-craft-x-login.appspot.com",
+      messagingSenderId: "450741491920",
+      appId: "1:450741491920:web:e2590465df34654d0f66d5"
+    };
+    // ----------------------------------------------------
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const functions = getFunctions(app);
+    const provider = new GoogleAuthProvider();
+
+    const signCard = document.getElementById('signCard');
+    const detailsCard = document.getElementById('detailsCard');
+    const doneCard = document.getElementById('doneCard');
+    const googleBtn = document.getElementById('googleBtn');
+    const saveBtn = document.getElementById('saveBtn');
+
+    const emailEl = document.getElementById('email');
+    const nameEl = document.getElementById('displayName');
+    const gamerTagEl = document.getElementById('gamerTag');
+    const instaEl = document.getElementById('instagram');
+
+    function show(el){ el.classList.remove('hidden'); }
+    function hide(el){ el.classList.add('hidden'); }
+
+    googleBtn.addEventListener('click', async ()=>{
+      try {
+        await signInWithPopup(auth, provider);
+      } catch(err){
+        alert('Sign in failed: '+err.message);
+      }
+    });
+
+    onAuthStateChanged(auth, async (user)=>{
+      if(!user){
+        show(signCard);
+        hide(detailsCard); hide(doneCard);
+        return;
+      }
+      // user signed in
+      const ref = doc(db,'users',user.uid);
+      const snap = await getDoc(ref);
+      emailEl.value = user.email || '';
+      nameEl.value  = user.displayName || '';
+
+      if(snap.exists()){
+        const data = snap.data();
+        gamerTagEl.value = data.gamerTag || '';
+        instaEl.value = data.instagram || '';
+        if(data.gamerTag && data.instagram){
+          hide(signCard); hide(detailsCard); show(doneCard);
+          return;
+        }
+      }
+      // show details form for first-time or incomplete profile
+      hide(signCard); show(detailsCard); hide(doneCard);
+    });
+
+    saveBtn.addEventListener('click', async ()=>{
+      const user = auth.currentUser;
+      if(!user) return alert('Please sign in first');
+      const gamerTag = gamerTagEl.value.trim();
+      const instagram = instaEl.value.trim();
+      if(!gamerTag||!instagram) return alert('Fill both GamerTag & Instagram');
+
+      // Save to Firestore
+      await setDoc(doc(db,'users',user.uid), {
+        email: user.email, name: user.displayName || '', gamerTag, instagram, updatedAt: new Date()
+      }, { merge:true });
+
+      // Call Cloud Function notifyOwner
+      try {
+        const notify = httpsCallable(functions,'notifyOwner');
+        await notify({ email: user.email, name: user.displayName || '', gamerTag, instagram });
+      } catch(err){
+        console.error('notifyOwner error', err);
+      }
+
+      hide(signCard); hide(detailsCard); show(doneCard);
+      alert('Saved and owner notified.');
+    });
+  </script>
 </body>
-</html>
+    </html>
